@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SuperLogs.Model;
+using SuperLogs.Model.Context;
 
 namespace SuperLogs.Api.Controllers
 {
@@ -11,29 +13,31 @@ namespace SuperLogs.Api.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly AppDbContext _context;
+        public WeatherForecastController(AppDbContext contexto)
         {
-            _logger = logger;
+            _context = contexto;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public ActionResult<IEnumerable<Log>> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            //Teste de insert e select no banco
+            //_context.Log.Add(new Log()
+            //{
+            //    Titulo = "Titulo log",
+            //    Descricao = "descrição log",
+            //    Eventos = 100,
+            //    Host = "linkhost",
+            //    Data = new DateTime(),
+            //    IdStatus = 1,
+            //    IdAmbiente = 1,
+            //    IdTipoLog = 1,
+            //    IdUsuario = 1
+            //});
+            //_context.SaveChanges();
+            return _context.Log.ToList();
         }
     }
 }
