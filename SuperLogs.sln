@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperLogs.Api", "SuperLogs.Api\SuperLogs.Api.csproj", "{C7DE9CE1-5192-48BA-B800-27C862AD6EEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperLogs.Model", "SuperLogs.Model\SuperLogs.Model.csproj", "{9FF8A3E9-7B18-4874-B138-ABB170E85730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperLogs.Service", "SuperLogs.Service\SuperLogs.Service.csproj", "{3C2CB020-5C9C-44FA-90CC-7766549476EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C7DE9CE1-5192-48BA-B800-27C862AD6EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7DE9CE1-5192-48BA-B800-27C862AD6EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7DE9CE1-5192-48BA-B800-27C862AD6EEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FF8A3E9-7B18-4874-B138-ABB170E85730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FF8A3E9-7B18-4874-B138-ABB170E85730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FF8A3E9-7B18-4874-B138-ABB170E85730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FF8A3E9-7B18-4874-B138-ABB170E85730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

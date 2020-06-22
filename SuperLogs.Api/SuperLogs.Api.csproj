@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SuperLogs.Model\SuperLogs.Model.csproj" />
+    <ProjectReference Include="..\SuperLogs.Service\SuperLogs.Service.csproj" />
+  </ItemGroup>
+
 
 </Project>
