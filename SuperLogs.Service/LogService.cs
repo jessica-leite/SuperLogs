@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SuperLogs.Model;
+﻿using SuperLogs.Model;
 using SuperLogs.Model.Context;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using SuperLogs.Transport;
 
 namespace SuperLogs.Service
 {
@@ -15,10 +12,26 @@ namespace SuperLogs.Service
         {
             _context = context;
         }
-        public void Add(Log log)
+        public void Criar(CriarLogDto log)
         {
-            _context.Log.Add(log);
+            _context.Log.Add(ParaLog(log));
             _context.SaveChanges();
+        }
+
+        private Log ParaLog(CriarLogDto log)
+        {
+            return new Log
+            {
+                Data = log.Data,
+                Descricao = log.Descricao,
+                Eventos = log.Eventos,
+                Host = log.Host,
+                IdAmbiente = log.IdAmbiente,
+                IdStatus = log.IdStatus,
+                IdTipoLog = log.IdTipoLog,
+                IdUsuario = log.IdUsuario,
+                Titulo = log.Titulo
+            };
         }
     }
 }
