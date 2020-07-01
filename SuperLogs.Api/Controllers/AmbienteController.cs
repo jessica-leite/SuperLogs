@@ -15,25 +15,23 @@ namespace SuperLogs.Api.Controllers
     [ApiController]
     public class AmbienteController : ControllerBase
     {
-        private readonly AppDbContext _database;
         private readonly IAmbienteService _ambiente;
 
-        public AmbienteController(AppDbContext database, IAmbienteService ambiente)
+        public AmbienteController(IAmbienteService ambiente)
         {
-            _database = database;
             _ambiente = ambiente;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Ambiente>> Get()
         {
-            return _database.Ambiente.ToList();
+            return _ambiente.ListarTodos();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Ambiente> Get(int id)
         {
-            var ambiente = _database.Ambiente.Find(id); 
+            var ambiente = _ambiente.ObterPorId(id);
             if (ambiente == null)
             {
                 return NotFound();
@@ -54,28 +52,18 @@ namespace SuperLogs.Api.Controllers
             {
                 return BadRequest();
             }
-            _database.Entry(ambiente).State = EntityState.Modified;
-            _database.SaveChanges();
-            return Ok();
+            return Ok(_ambiente.Atualizar(ambiente));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Ambiente> Delete(int id)
         {
-            var ambiente = _database.Ambiente.Find(id);
-            if(ambiente == null)
+            var ambienteEncontrado = _ambiente.Deletar(id);
+            if(ambienteEncontrado == false)
             {
                 return NotFound();
             }
-            _database.Ambiente.Remove(ambiente);
-            _database.SaveChanges();
-            return ambiente;
-        }
-
-        [HttpGet("logs")]
-        public ActionResult<IEnumerable<Ambiente>> GetAmbienteLogs()
-        {
-            return _database.Ambiente.Include(x => x.Logs).ToList();
+            return Ok();
         }
 
     }

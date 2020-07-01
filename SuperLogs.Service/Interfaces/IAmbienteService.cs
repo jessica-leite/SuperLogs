@@ -6,9 +6,9 @@ namespace SuperLogs.Service.Interfaces
     public interface IAmbienteService
     {
         Ambiente Salvar(Ambiente ambiente);
-        /*Ambiente ObterPorId(int id);
-        Ambiente Atualizar(int id, Ambiente ambiente);
+        Ambiente ObterPorId(int id);
+        Ambiente Atualizar(Ambiente ambiente);
         bool Deletar(int id);
-        List<Ambiente> ListarTodos();*/
+        List<Ambiente> ListarTodos();
     }
 }

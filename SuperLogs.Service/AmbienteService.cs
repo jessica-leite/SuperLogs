@@ -1,8 +1,10 @@
-﻿using SuperLogs.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperLogs.Model;
 using SuperLogs.Model.Context;
 using SuperLogs.Service.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SuperLogs.Service
@@ -22,30 +24,37 @@ namespace SuperLogs.Service
             _context.SaveChanges();
             return ambiente;
         }
-        /*
-        Ambiente IAmbienteService.Atualizar(int id, Ambiente ambiente)
+
+        public Ambiente ObterPorId(int id)
         {
-            throw new NotImplementedException();
+            var ambiente = _context.Ambiente.Find(id);
+            return ambiente;
         }
 
-        bool IAmbienteService.Deletar(int id)
+        public Ambiente Atualizar(Ambiente ambiente)
         {
-            throw new NotImplementedException();
+            _context.Entry(ambiente).State = EntityState.Modified;
+            _context.SaveChanges();
+            return ambiente;
         }
 
-        List<Ambiente> IAmbienteService.ListarTodos()
+        
+        public bool Deletar(int id)
         {
-            throw new NotImplementedException();
+            var ambiente = _context.Ambiente.Find(id);
+            if (ambiente == null)
+            {
+                return false;
+            }
+            _context.Ambiente.Remove(ambiente);
+            _context.SaveChanges();
+            return true;
         }
-
-        Ambiente IAmbienteService.ObterPorId(int id)
+        
+        public List<Ambiente> ListarTodos()
         {
-            throw new NotImplementedException();
+            return _context.Ambiente.ToList();
         }
-
-        Ambiente IAmbienteService.Salvar(Ambiente ambiente)
-        {
-            throw new NotImplementedException();
-        }*/
+       
     }
 }
