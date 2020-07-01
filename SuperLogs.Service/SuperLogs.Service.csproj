@@ -17,4 +17,8 @@
     <ProjectReference Include="..\SuperLogs.Model\SuperLogs.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NovaPasta\" />
+  </ItemGroup>
+
 </Project>

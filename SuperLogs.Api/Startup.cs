@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SuperLogs.Model.Context;
+using SuperLogs.Service.Interfaces;
+using SuperLogs.Service;
 
 namespace SuperLogs.Api
 {
@@ -28,6 +30,7 @@ namespace SuperLogs.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("SuperLogs.Api")));
+            services.AddScoped<IAmbienteService, AmbienteService>();
             services.AddControllers();
         }
 

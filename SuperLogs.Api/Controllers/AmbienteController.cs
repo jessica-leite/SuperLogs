@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using SuperLogs.Model;
 using SuperLogs.Model.Context;
+using SuperLogs.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,12 @@ namespace SuperLogs.Api.Controllers
     public class AmbienteController : ControllerBase
     {
         private readonly AppDbContext _database;
+        private readonly IAmbienteService _ambiente;
 
-        public AmbienteController(AppDbContext database)
+        public AmbienteController(AppDbContext database, IAmbienteService ambiente)
         {
             _database = database;
+            _ambiente = ambiente;
         }
 
         [HttpGet]
@@ -41,11 +44,8 @@ namespace SuperLogs.Api.Controllers
         [HttpPost]
         public ActionResult Post([FromBody]Ambiente ambiente)
         {
-            _database.Ambiente.Add(ambiente);
-            _database.SaveChanges();
-            return Ok(ambiente);
+            return Ok(_ambiente.Salvar(ambiente));
         }
-
 
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Ambiente ambiente)
@@ -71,5 +71,12 @@ namespace SuperLogs.Api.Controllers
             _database.SaveChanges();
             return ambiente;
         }
+
+        [HttpGet("logs")]
+        public ActionResult<IEnumerable<Ambiente>> GetAmbienteLogs()
+        {
+            return _database.Ambiente.Include(x => x.Logs).ToList();
+        }
+
     }
 }
