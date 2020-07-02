@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SuperLogs.Api.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,57 +75,62 @@ namespace SuperLogs.Api.Migrations
                     IdStatus = table.Column<int>(nullable: false),
                     IdAmbiente = table.Column<int>(nullable: false),
                     IdTipoLog = table.Column<int>(nullable: false),
-                    IdUsuario = table.Column<int>(nullable: false),
-                    AmbienteIdAmbiente = table.Column<int>(nullable: true),
-                    StatusIdStatus = table.Column<int>(nullable: true),
-                    TipoLogIdTipoLog = table.Column<int>(nullable: true)
+                    IdUsuario = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Log", x => x.IdLog);
                     table.ForeignKey(
-                        name: "FK_Log_Ambiente_AmbienteIdAmbiente",
-                        column: x => x.AmbienteIdAmbiente,
+                        name: "FK_Log_Ambiente_IdAmbiente",
+                        column: x => x.IdAmbiente,
                         principalTable: "Ambiente",
                         principalColumn: "IdAmbiente",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Log_Status_StatusIdStatus",
-                        column: x => x.StatusIdStatus,
+                        name: "FK_Log_Status_IdStatus",
+                        column: x => x.IdStatus,
                         principalTable: "Status",
                         principalColumn: "IdStatus",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Log_TipoLog_TipoLogIdTipoLog",
-                        column: x => x.TipoLogIdTipoLog,
+                        name: "FK_Log_TipoLog_IdTipoLog",
+                        column: x => x.IdTipoLog,
                         principalTable: "TipoLog",
                         principalColumn: "IdTipoLog",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Log_Usuario_IdUsuario",
+                        column: x => x.IdUsuario,
+                        principalTable: "Usuario",
+                        principalColumn: "IdUsuario",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Log_AmbienteIdAmbiente",
+                name: "IX_Log_IdAmbiente",
                 table: "Log",
-                column: "AmbienteIdAmbiente");
+                column: "IdAmbiente");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Log_StatusIdStatus",
+                name: "IX_Log_IdStatus",
                 table: "Log",
-                column: "StatusIdStatus");
+                column: "IdStatus");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Log_TipoLogIdTipoLog",
+                name: "IX_Log_IdTipoLog",
                 table: "Log",
-                column: "TipoLogIdTipoLog");
+                column: "IdTipoLog");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Log_IdUsuario",
+                table: "Log",
+                column: "IdUsuario");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Log");
-
-            migrationBuilder.DropTable(
-                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Ambiente");
@@ -135,6 +140,9 @@ namespace SuperLogs.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoLog");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
         }
     }
 }
