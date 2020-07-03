@@ -17,6 +17,9 @@ using SuperLogs.Service;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using SuperLogs.Transport.Mappings;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace SuperLogs.Api
 {
@@ -45,6 +48,21 @@ namespace SuperLogs.Api
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthentication(
+                JwtBearerDefaults.AuthenticationScheme).
+                AddJwtBearer(options =>
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidAudience = Configuration["TokenConfiguration:Audience"],
+                     ValidIssuer = Configuration["TokenConfiguration:Issuer"],
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                         Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
+                 });
 
             services.AddScoped<IAmbienteService, AmbienteService>();
             
