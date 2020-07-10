@@ -21,6 +21,6 @@ namespace SuperLogs.Service
         IList<Log> BuscaPorIdUsuario(int idUsuario);
         IList<Log> BuscaPorIdTipoLog(int idTipoLog);
         IList<Log> BuscaPorEventos(int eventos);
-        IList<Log> BuscaPorData(int data);
+        IList<Log> BuscaPorData(DateTime data);
     }
 }

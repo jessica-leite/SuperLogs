@@ -1,7 +1,9 @@
 ﻿using SuperLogs.Model;
 using SuperLogs.Model.Context;
 using SuperLogs.Transport;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SuperLogs.Service
 {
@@ -14,7 +16,7 @@ namespace SuperLogs.Service
             _context = context;
         }
 
-        public IList<Log> BuscaPorData(int data)
+        public IList<Log> BuscaPorData(DateTime data)
         {
             throw new System.NotImplementedException();
         }
@@ -29,34 +31,34 @@ namespace SuperLogs.Service
             throw new System.NotImplementedException();
         }
 
-        public IList<Log> BuscaPorId(int id)
+        public Log BuscaPorId(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.First(log => log.IdLog == id);
         }
 
         public IList<Log> BuscaPorIdAmbiente(int idAmbiente)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.IdAmbiente == idAmbiente).ToList();
         }
 
         public IList<Log> BuscaPorIdStatus(int idStatus)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.IdStatus == idStatus).ToList();
         }
 
         public IList<Log> BuscaPorIdTipoLog(int idTipoLog)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.IdTipoLog == idTipoLog).ToList();
         }
 
         public IList<Log> BuscaPorIdUsuario(int idUsuario)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.IdUsuario == idUsuario).ToList();
         }
 
         public IList<Log> BuscaPorTitulo(string titulo)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.Titulo.Contains(titulo)).ToList();
         }
 
         public void Criar(CriarLogDto log)
