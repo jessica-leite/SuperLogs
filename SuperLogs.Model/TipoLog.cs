@@ -10,11 +10,6 @@ namespace SuperLogs.Model
     [Table("TipoLog")]
     public class TipoLog
     {
-        public TipoLog()
-        {
-            Logs = new Collection<Log>();
-        }
-
         [Key]
         public int IdTipoLog { get; set; }
 

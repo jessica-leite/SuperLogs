@@ -10,12 +10,6 @@ namespace SuperLogs.Model
     [Table("Ambiente")]
     public class Ambiente
     {
-        public Ambiente()
-        {
-            Logs = new Collection<Log>();
-        }
-        
-
         [Key]
         public int IdAmbiente { get; set; }
 
@@ -23,6 +17,5 @@ namespace SuperLogs.Model
         public string Tipo { get; set; }
 
         public ICollection<Log> Logs { get; set; }
-        
     }
 }

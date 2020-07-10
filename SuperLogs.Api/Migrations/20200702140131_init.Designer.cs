@@ -10,8 +10,8 @@ using SuperLogs.Model.Context;
 namespace SuperLogs.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200622184320_Inicial")]
-    partial class Inicial
+    [Migration("20200702140131_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,9 +44,6 @@ namespace SuperLogs.Api.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AmbienteIdAmbiente")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
@@ -62,21 +59,19 @@ namespace SuperLogs.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdAmbiente")
+                        .HasColumnName("IdAmbiente")
                         .HasColumnType("int");
 
                     b.Property<int>("IdStatus")
+                        .HasColumnName("IdStatus")
                         .HasColumnType("int");
 
                     b.Property<int>("IdTipoLog")
+                        .HasColumnName("IdTipoLog")
                         .HasColumnType("int");
 
                     b.Property<int>("IdUsuario")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StatusIdStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TipoLogIdTipoLog")
+                        .HasColumnName("IdUsuario")
                         .HasColumnType("int");
 
                     b.Property<string>("Titulo")
@@ -85,11 +80,13 @@ namespace SuperLogs.Api.Migrations
 
                     b.HasKey("IdLog");
 
-                    b.HasIndex("AmbienteIdAmbiente");
+                    b.HasIndex("IdAmbiente");
 
-                    b.HasIndex("StatusIdStatus");
+                    b.HasIndex("IdStatus");
 
-                    b.HasIndex("TipoLogIdTipoLog");
+                    b.HasIndex("IdTipoLog");
+
+                    b.HasIndex("IdUsuario");
 
                     b.ToTable("Log");
                 });
@@ -152,17 +149,29 @@ namespace SuperLogs.Api.Migrations
 
             modelBuilder.Entity("SuperLogs.Model.Log", b =>
                 {
-                    b.HasOne("SuperLogs.Model.Ambiente", null)
+                    b.HasOne("SuperLogs.Model.Ambiente", "Ambiente")
                         .WithMany("Logs")
-                        .HasForeignKey("AmbienteIdAmbiente");
+                        .HasForeignKey("IdAmbiente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SuperLogs.Model.Status", null)
+                    b.HasOne("SuperLogs.Model.Status", "Status")
                         .WithMany("Logs")
-                        .HasForeignKey("StatusIdStatus");
+                        .HasForeignKey("IdStatus")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("SuperLogs.Model.TipoLog", null)
+                    b.HasOne("SuperLogs.Model.TipoLog", "TipoLog")
                         .WithMany("Logs")
-                        .HasForeignKey("TipoLogIdTipoLog");
+                        .HasForeignKey("IdTipoLog")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SuperLogs.Model.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

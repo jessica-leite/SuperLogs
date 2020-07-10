@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using SuperLogs.Model;
 using SuperLogs.Model.Context;
+using SuperLogs.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +13,28 @@ using System.Threading.Tasks;
 
 namespace SuperLogs.Api.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[Controller]")]
     [ApiController]
     public class AmbienteController : ControllerBase
     {
-        private readonly AppDbContext _database;
+        private readonly IAmbienteService _ambiente;
 
-        public AmbienteController(AppDbContext database)
+        public AmbienteController(IAmbienteService ambiente)
         {
-            _database = database;
+            _ambiente = ambiente;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Ambiente>> Get()
         {
-            return _database.Ambiente.ToList();
+            return _ambiente.ListarTodos();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Ambiente> Get(int id)
         {
-            var ambiente = _database.Ambiente.Find(id); 
+            var ambiente = _ambiente.ObterPorId(id);
             if (ambiente == null)
             {
                 return NotFound();
@@ -41,11 +45,8 @@ namespace SuperLogs.Api.Controllers
         [HttpPost]
         public ActionResult Post([FromBody]Ambiente ambiente)
         {
-            _database.Ambiente.Add(ambiente);
-            _database.SaveChanges();
-            return Ok(ambiente);
+            return Ok(_ambiente.Salvar(ambiente));
         }
-
 
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Ambiente ambiente)
@@ -54,22 +55,19 @@ namespace SuperLogs.Api.Controllers
             {
                 return BadRequest();
             }
-            _database.Entry(ambiente).State = EntityState.Modified;
-            _database.SaveChanges();
-            return Ok();
+            return Ok(_ambiente.Atualizar(ambiente));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Ambiente> Delete(int id)
         {
-            var ambiente = _database.Ambiente.Find(id);
-            if(ambiente == null)
+            var ambienteEncontrado = _ambiente.Deletar(id);
+            if(ambienteEncontrado == false)
             {
                 return NotFound();
             }
-            _database.Ambiente.Remove(ambiente);
-            _database.SaveChanges();
-            return ambiente;
+            return Ok();
         }
+
     }
 }
