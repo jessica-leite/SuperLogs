@@ -5,6 +5,8 @@ namespace SuperLogs.Transport
 {
     public class CriarLogDto
     {
+        public int IdLog { get; set; }
+
         [Required]
         public string Titulo { get; set; }
 

@@ -22,6 +22,7 @@ namespace SuperLogs.Service
         {
             return new Log
             {
+                IdLog = log.IdLog,
                 Data = log.Data,
                 Descricao = log.Descricao,
                 Eventos = log.Eventos,
