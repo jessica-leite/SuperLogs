@@ -10,11 +10,6 @@ namespace SuperLogs.Model
     [Table("Status")]
     public class Status
     {
-        public Status()
-        {
-            Logs = new Collection<Log>();
-        }
-
         [Key]
         public int IdStatus { get; set; }
 

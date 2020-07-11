@@ -27,16 +27,20 @@ namespace SuperLogs.Model
         [Required]
         public DateTime Data { get; set; }
 
-        [Required]
+        [Required, Column("IdStatus"), ForeignKey("Status")]
         public int IdStatus { get; set; }
+        public Status Status { get; set; }
 
-        [Required]
+        [Required,Column("IdAmbiente"), ForeignKey("Ambiente")]
         public int IdAmbiente { get; set; }
+        public Ambiente Ambiente { get; set; }
 
-        [Required]
+        [Required,Column("IdTipoLog"), ForeignKey("TipoLog")]
         public int IdTipoLog { get; set; }
+        public TipoLog TipoLog { get; set; }
 
-        [Required]
+        [Required,Column("IdUsuario"), ForeignKey("Usuario")]
         public int IdUsuario { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }
