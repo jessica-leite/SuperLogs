@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperLogs.Model", "SuperLog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperLogs.Service", "SuperLogs.Service\SuperLogs.Service.csproj", "{3C2CB020-5C9C-44FA-90CC-7766549476EA}"
 EndProject
+
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuperLogs.Transport", "SuperLogs.Transport\SuperLogs.Transport.csproj", "{B241659F-A76C-4797-89AD-1D54D97946A7}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +31,12 @@ Global
 		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C2CB020-5C9C-44FA-90CC-7766549476EA}.Release|Any CPU.Build.0 = Release|Any CPU
+
 		{B241659F-A76C-4797-89AD-1D54D97946A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B241659F-A76C-4797-89AD-1D54D97946A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B241659F-A76C-4797-89AD-1D54D97946A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B241659F-A76C-4797-89AD-1D54D97946A7}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

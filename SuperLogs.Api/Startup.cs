@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SuperLogs.Model.Context;
+
 using SuperLogs.Service.Interfaces;
 using SuperLogs.Service;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ using SuperLogs.Transport.Mappings;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 
 namespace SuperLogs.Api
 {
@@ -67,6 +69,9 @@ namespace SuperLogs.Api
             services.AddScoped<IAmbienteService, AmbienteService>();
             
             services.AddControllers();
+
+            services.AddDbContext<AppDbContext>();
+            services.AddScoped<LogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
