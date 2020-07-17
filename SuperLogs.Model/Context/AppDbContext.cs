@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SuperLogs.Model.Mapping;
 
 namespace SuperLogs.Model.Context
 {
@@ -16,5 +14,12 @@ namespace SuperLogs.Model.Context
         public DbSet<Status> Status { get; set; }
         public DbSet<TipoLog> TipoLog { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new TipoLogMapping());
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

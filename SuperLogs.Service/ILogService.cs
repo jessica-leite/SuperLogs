@@ -10,7 +10,7 @@ namespace SuperLogs.Service
     {
         void Criar(CriarLogDto log);
 
-        IList<Log> BuscaPorId(int id);
+        Log BuscaPorId(int id);
         IList<Log> BuscaPorHostName(string hostName);
 
         IList<Log> BuscaPorTitulo(string titulo);
