@@ -37,7 +37,7 @@ namespace SuperLogs.Api.Controllers
 
             _logService.Criar(log);
 
-            var uri = Url.Action("Recuperar", new { id = log.IdLog });
+            var uri = Url.Action(nameof(Get), new { id = log.IdLog });
             return Created(uri, log);
         }
 
@@ -52,6 +52,19 @@ namespace SuperLogs.Api.Controllers
             _logService.Atualizar(log);
 
             return Ok(log);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var excluido = _logService.Deletar(id);
+
+            if (excluido)
+            {
+                return NoContent();
+            }
+            
+            return NotFound();
         }
     }
 }

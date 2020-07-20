@@ -79,6 +79,20 @@ namespace SuperLogs.Service
             return log;
         }
 
+        public bool Deletar(int id)
+        {
+            var log = BuscaPorId(id);
+            if (log == null)
+            {
+                return false;
+            }
+
+            _context.Log.Remove(log);
+            _context.SaveChanges();
+
+            return true;
+        }
+
         private Log ParaLog(CriarLogDto log)
         {
             return new Log
