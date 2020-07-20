@@ -70,6 +70,15 @@ namespace SuperLogs.Service
             log.IdLog = logModel.IdLog;
         }
 
+        public CriarLogDto Atualizar(CriarLogDto log)
+        {
+            var logModel = ParaLog(log);
+            _context.Log.Update(logModel);
+            _context.SaveChanges();
+
+            return log;
+        }
+
         private Log ParaLog(CriarLogDto log)
         {
             return new Log

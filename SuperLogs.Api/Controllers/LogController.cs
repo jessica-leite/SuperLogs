@@ -15,7 +15,8 @@ namespace SuperLogs.Api.Controllers
             _logService = service;
         }
 
-        public ActionResult Recuperar(int id)
+        [HttpGet]
+        public ActionResult Get(int id)
         {
             var log = _logService.BuscaPorId(id);
             if (log == null)
@@ -27,7 +28,7 @@ namespace SuperLogs.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult Criar([FromBody] CriarLogDto log)
+        public ActionResult Post([FromBody] CriarLogDto log)
         {
             if (!ModelState.IsValid)
             {
@@ -40,6 +41,17 @@ namespace SuperLogs.Api.Controllers
             return Created(uri, log);
         }
 
-        
+        [HttpPut]
+        public ActionResult Update([FromBody] CriarLogDto log)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(log);
+            }
+
+            _logService.Atualizar(log);
+
+            return Ok(log);
+        }
     }
 }
