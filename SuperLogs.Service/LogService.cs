@@ -33,7 +33,7 @@ namespace SuperLogs.Service
 
         public Log BuscaPorId(int id)
         {
-            return _context.Log.First(log => log.IdLog == id);
+            return _context.Log.FirstOrDefault(log => log.IdLog == id);
         }
 
         public IList<Log> BuscaPorIdAmbiente(int idAmbiente)
@@ -63,8 +63,11 @@ namespace SuperLogs.Service
 
         public void Criar(CriarLogDto log)
         {
-            _context.Log.Add(ParaLog(log));
+            var logModel = ParaLog(log);
+            _context.Log.Add(logModel);
             _context.SaveChanges();
+
+            log.IdLog = logModel.IdLog;
         }
 
         private Log ParaLog(CriarLogDto log)

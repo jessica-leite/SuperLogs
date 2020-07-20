@@ -17,7 +17,13 @@ namespace SuperLogs.Api.Controllers
 
         public ActionResult Recuperar(int id)
         {
-            return null;
+            var log = _logService.BuscaPorId(id);
+            if (log == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(log);
         }
 
         [HttpPost]
