@@ -18,17 +18,17 @@ namespace SuperLogs.Service
 
         public IList<Log> BuscaPorData(DateTime data)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.Data == data).ToList();
         }
 
         public IList<Log> BuscaPorEventos(int eventos)
         {
-            throw new System.NotImplementedException();
+           return _context.Log.Where(log => log.Eventos == eventos).ToList();
         }
 
         public IList<Log> BuscaPorHostName(string hostName)
         {
-            throw new System.NotImplementedException();
+           return _context.Log.Where(log => log.Host == hostName).ToList();
         }
 
         public Log BuscaPorId(int id)
