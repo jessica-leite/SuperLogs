@@ -18,22 +18,22 @@ namespace SuperLogs.Service
 
         public IList<Log> BuscaPorData(DateTime data)
         {
-            throw new System.NotImplementedException();
+            return _context.Log.Where(log => log.Data == data).ToList();
         }
 
         public IList<Log> BuscaPorEventos(int eventos)
         {
-            throw new System.NotImplementedException();
+           return _context.Log.Where(log => log.Eventos == eventos).ToList();
         }
 
         public IList<Log> BuscaPorHostName(string hostName)
         {
-            throw new System.NotImplementedException();
+           return _context.Log.Where(log => log.Host == hostName).ToList();
         }
 
         public Log BuscaPorId(int id)
         {
-            return _context.Log.First(log => log.IdLog == id);
+            return _context.Log.FirstOrDefault(log => log.IdLog == id);
         }
 
         public IList<Log> BuscaPorIdAmbiente(int idAmbiente)
@@ -63,8 +63,34 @@ namespace SuperLogs.Service
 
         public void Criar(CriarLogDto log)
         {
-            _context.Log.Add(ParaLog(log));
+            var logModel = ParaLog(log);
+            _context.Log.Add(logModel);
             _context.SaveChanges();
+
+            log.IdLog = logModel.IdLog;
+        }
+
+        public CriarLogDto Atualizar(CriarLogDto log)
+        {
+            var logModel = ParaLog(log);
+            _context.Log.Update(logModel);
+            _context.SaveChanges();
+
+            return log;
+        }
+
+        public bool Deletar(int id)
+        {
+            var log = BuscaPorId(id);
+            if (log == null)
+            {
+                return false;
+            }
+
+            _context.Log.Remove(log);
+            _context.SaveChanges();
+
+            return true;
         }
 
         private Log ParaLog(CriarLogDto log)
