@@ -1,6 +1,8 @@
-﻿using SuperLogs.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperLogs.Model;
 using SuperLogs.Model.Context;
 using SuperLogs.Transport;
+using SuperLogs.Transport.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,40 @@ namespace SuperLogs.Service
         public IList<Log> BuscaPorHostName(string hostName)
         {
            return _context.Log.Where(log => log.Host == hostName).ToList();
+        }
+
+        public object BuscaPorFiltro(FiltroLogDto filtro)
+        {
+            var query = _context.Log.Where(log => log.IdAmbiente == filtro.IdAmbiente);
+
+            if (filtro.BuscarPor == BuscaEnum.Descricao)
+            {
+                query = query.Where(log => log.Descricao.Contains(filtro.PesquisaCampo));
+            }
+
+            if (filtro.BuscarPor == BuscaEnum.Level)
+            {
+                query = query.Where(log => log.TipoLog.Tipo.Contains(filtro.PesquisaCampo));
+            }
+
+            if (filtro.BuscarPor == BuscaEnum.Origem)
+            {
+                query = query.Where(log => log.Host.Contains(filtro.PesquisaCampo));
+            }
+
+            if (filtro.OrdenarPor == OrdenacaoEnum.Frequencia)
+            {
+                query = query.OrderBy(log => log.Eventos);
+            }
+
+            if (filtro.OrdenarPor == OrdenacaoEnum.Level)
+            {
+                query = query
+                    .Include(log => log.TipoLog)
+                    .OrderBy(log => log.TipoLog.Tipo);
+            }
+
+            return query.ToList();
         }
 
         public Log BuscaPorId(int id)
