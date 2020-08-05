@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SuperLogs.Transport.DTOs
+﻿namespace SuperLogs.Transport.DTOs
 {
     public class FiltroLogDto
     {

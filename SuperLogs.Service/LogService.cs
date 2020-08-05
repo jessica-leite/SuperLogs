@@ -33,31 +33,31 @@ namespace SuperLogs.Service
            return _context.Log.Where(log => log.Host == hostName).ToList();
         }
 
-        public object BuscaPorFiltro(FiltroLogDto filtro)
+        public IList<Log> BuscaPorFiltro(FiltroLogDto filtro)
         {
             var query = _context.Log.Where(log => log.IdAmbiente == filtro.IdAmbiente);
 
-            if (filtro.BuscarPor == BuscaEnum.Descricao)
+            if (filtro.BuscarPor == BuscaEnum.Descricao && !string.IsNullOrWhiteSpace(filtro.PesquisaCampo))
             {
                 query = query.Where(log => log.Descricao.Contains(filtro.PesquisaCampo));
             }
 
-            if (filtro.BuscarPor == BuscaEnum.Level)
+            if (filtro.BuscarPor == BuscaEnum.Level && !string.IsNullOrWhiteSpace(filtro.PesquisaCampo))
             {
                 query = query.Where(log => log.TipoLog.Tipo.Contains(filtro.PesquisaCampo));
             }
 
-            if (filtro.BuscarPor == BuscaEnum.Origem)
+            if (filtro.BuscarPor == BuscaEnum.Origem && !string.IsNullOrWhiteSpace(filtro.PesquisaCampo))
             {
                 query = query.Where(log => log.Host.Contains(filtro.PesquisaCampo));
             }
 
-            if (filtro.OrdenarPor == OrdenacaoEnum.Frequencia)
+            if (filtro.OrdenarPor == OrdenacaoEnum.Frequencia && !string.IsNullOrWhiteSpace(filtro.PesquisaCampo))
             {
                 query = query.OrderBy(log => log.Eventos);
             }
 
-            if (filtro.OrdenarPor == OrdenacaoEnum.Level)
+            if (filtro.OrdenarPor == OrdenacaoEnum.Level && !string.IsNullOrWhiteSpace(filtro.PesquisaCampo))
             {
                 query = query
                     .Include(log => log.TipoLog)
