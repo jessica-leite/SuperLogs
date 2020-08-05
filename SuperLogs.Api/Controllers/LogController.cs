@@ -39,11 +39,6 @@ namespace SuperLogs.Api.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] CriarLogDto log)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(log);
-            }
-
             _logService.Criar(log);
 
             var uri = Url.Action(nameof(Get), new { id = log.IdLog });
@@ -53,11 +48,6 @@ namespace SuperLogs.Api.Controllers
         [HttpPut]
         public ActionResult Update([FromBody] CriarLogDto log)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(log);
-            }
-
             _logService.Atualizar(log);
 
             return Ok(log);
