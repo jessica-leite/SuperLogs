@@ -1,6 +1,8 @@
-﻿using SuperLogs.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperLogs.Model;
 using SuperLogs.Model.Context;
 using SuperLogs.Transport;
+using SuperLogs.Transport.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +25,65 @@ namespace SuperLogs.Service
 
         public IList<Log> BuscaPorEventos(int eventos)
         {
-           return _context.Log.Where(log => log.Eventos == eventos).ToList();
+            return _context.Log.Where(log => log.Eventos == eventos).ToList();
         }
 
         public IList<Log> BuscaPorHostName(string hostName)
         {
-           return _context.Log.Where(log => log.Host == hostName).ToList();
+            return _context.Log.Where(log => log.Host == hostName).ToList();
+        }
+
+        public IList<ListarLogDto> BuscaPorFiltro(FiltroLogDto filtro)
+        {
+            var query = _context.Log.Where(log => log.IdAmbiente == filtro.IdAmbiente);
+
+            if (!string.IsNullOrWhiteSpace(filtro.PesquisaCampo))
+            {
+                if (filtro.BuscarPor == BuscaEnum.Descricao)
+                {
+                    query = query.Where(log => log.Descricao.Contains(filtro.PesquisaCampo));
+                }
+
+                if (filtro.BuscarPor == BuscaEnum.Level)
+                {
+                    query = query.Where(log => log.TipoLog.Tipo.Contains(filtro.PesquisaCampo));
+                }
+
+                if (filtro.BuscarPor == BuscaEnum.Origem)
+                {
+                    query = query.Where(log => log.Host.Contains(filtro.PesquisaCampo));
+                }
+            }
+
+            if (filtro.OrdenarPor == OrdenacaoEnum.Frequencia)
+            {
+                query = query.OrderBy(log => log.Eventos);
+            }
+
+            if (filtro.OrdenarPor == OrdenacaoEnum.Level)
+            {
+                query = query
+                    .Include(log => log.TipoLog)
+                    .OrderBy(log => log.TipoLog.Tipo);
+            }
+
+            var logs = query.ToList();
+            var logsDto = new List<ListarLogDto>();
+
+            logs.ForEach(l =>
+            {
+                var dto = new ListarLogDto
+                {
+                    IdLog = l.IdLog,
+                    Descricao = l.Descricao,
+                    Level = l.TipoLog.Tipo,
+                    Eventos = l.Eventos
+                };
+
+                logsDto.Add(dto);
+            });
+
+            return logsDto;
         }
 
         public Log BuscaPorId(int id)

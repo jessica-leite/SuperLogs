@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SuperLogs.Service;
 using SuperLogs.Transport;
+using SuperLogs.Transport.DTOs;
 
 namespace SuperLogs.Api.Controllers
 {
@@ -15,7 +16,7 @@ namespace SuperLogs.Api.Controllers
             _logService = service;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
             var log = _logService.BuscaPorId(id);
@@ -27,14 +28,17 @@ namespace SuperLogs.Api.Controllers
             return Ok(log);
         }
 
+        [HttpGet]
+        public ActionResult GetAllByFilter([FromQuery] FiltroLogDto filtro)
+        {
+            var logs = _logService.BuscaPorFiltro(filtro);
+
+            return Ok(logs);
+        }
+
         [HttpPost]
         public ActionResult Post([FromBody] CriarLogDto log)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(log);
-            }
-
             _logService.Criar(log);
 
             var uri = Url.Action(nameof(Get), new { id = log.IdLog });
@@ -44,11 +48,6 @@ namespace SuperLogs.Api.Controllers
         [HttpPut]
         public ActionResult Update([FromBody] CriarLogDto log)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(log);
-            }
-
             _logService.Atualizar(log);
 
             return Ok(log);
