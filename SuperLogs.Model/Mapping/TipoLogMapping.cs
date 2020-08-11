@@ -5,12 +5,11 @@ namespace SuperLogs.Model.Mapping
 {
     public class TipoLogMapping : IEntityTypeConfiguration<TipoLog>
     {
-
         public void Configure(EntityTypeBuilder<TipoLog> builder)
         {
-            builder.ToTable("TipoLog");
+            builder.ToTable(nameof(TipoLog));
 
-            builder.HasKey("IdTipoLog");
+            builder.HasKey(t => t.IdTipoLog);
 
             builder.Property(t => t.Tipo).IsRequired();
 
@@ -18,9 +17,9 @@ namespace SuperLogs.Model.Mapping
                 .WithOne(l => l.TipoLog);
 
             builder.HasData(
-                new TipoLog() { IdTipoLog = 1, Tipo = "Debug" },
-                new TipoLog() { IdTipoLog = 2, Tipo = "Warning" },
-                new TipoLog() { IdTipoLog = 3, Tipo = "Error" });
+                new TipoLog { IdTipoLog = 1, Tipo = "Debug" },
+                new TipoLog { IdTipoLog = 2, Tipo = "Warning" },
+                new TipoLog { IdTipoLog = 3, Tipo = "Error" });
         }
     }
 }

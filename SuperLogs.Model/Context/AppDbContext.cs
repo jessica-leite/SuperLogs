@@ -18,6 +18,8 @@ namespace SuperLogs.Model.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TipoLogMapping());
+            modelBuilder.ApplyConfiguration(new StatusMapping());
+            modelBuilder.ApplyConfiguration(new AmbienteMapping());
 
             base.OnModelCreating(modelBuilder);
         }
