@@ -106,9 +106,9 @@ namespace SuperLogs.Service
             return _context.Log.Where(log => log.IdTipoLog == idTipoLog).ToList();
         }
 
-        public IList<Log> BuscaPorIdUsuario(int idUsuario)
+        public IList<Log> BuscaPorTokenUsuario(string tokenUsuario)
         {
-            return _context.Log.Where(log => log.IdUsuario == idUsuario).ToList();
+            return _context.Log.Where(log => log.TokenUsuario == tokenUsuario).ToList();
         }
 
         public IList<Log> BuscaPorTitulo(string titulo)
@@ -160,7 +160,7 @@ namespace SuperLogs.Service
                 IdAmbiente = log.IdAmbiente,
                 IdStatus = log.IdStatus,
                 IdTipoLog = log.IdTipoLog,
-                IdUsuario = log.IdUsuario,
+                TokenUsuario = log.TokenUsuario,
                 Titulo = log.Titulo
             };
         }

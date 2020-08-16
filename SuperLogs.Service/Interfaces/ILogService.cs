@@ -18,7 +18,7 @@ namespace SuperLogs.Service
         IList<Log> BuscaPorIdStatus(int idStatus);
 
         IList<Log> BuscaPorIdAmbiente(int idAmbiente);
-        IList<Log> BuscaPorIdUsuario(int idUsuario);
+        IList<Log> BuscaPorTokenUsuario(string tokenUsuario);
         IList<Log> BuscaPorIdTipoLog(int idTipoLog);
         IList<Log> BuscaPorEventos(int eventos);
         IList<Log> BuscaPorData(DateTime data);

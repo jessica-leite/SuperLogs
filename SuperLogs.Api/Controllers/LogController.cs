@@ -41,8 +41,7 @@ namespace SuperLogs.Api.Controllers
         {
             _logService.Criar(log);
 
-            var uri = Url.Action(nameof(Get), new { id = log.IdLog });
-            return Created(uri, log);
+            return Ok();
         }
 
         [HttpPut]

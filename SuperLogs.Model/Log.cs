@@ -27,6 +27,10 @@ namespace SuperLogs.Model
         [Required]
         public DateTime Data { get; set; }
 
+        [Required]
+        public string TokenUsuario { get; set; }
+
+
         [Required, Column("IdStatus"), ForeignKey("Status")]
         public int IdStatus { get; set; }
         public Status Status { get; set; }
@@ -39,8 +43,5 @@ namespace SuperLogs.Model
         public int IdTipoLog { get; set; }
         public TipoLog TipoLog { get; set; }
 
-        [Required,Column("IdUsuario"), ForeignKey("Usuario")]
-        public int IdUsuario { get; set; }
-        public Usuario Usuario { get; set; }
     }
 }

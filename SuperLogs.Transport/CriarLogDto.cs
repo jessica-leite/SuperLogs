@@ -32,6 +32,6 @@ namespace SuperLogs.Transport
         public int IdTipoLog { get; set; }
 
         [Required]
-        public int IdUsuario { get; set; }
+        public string TokenUsuario { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace SuperLogs.Model.Context
         public DbSet<Log> Log { get; set; }
         public DbSet<Status> Status { get; set; }
         public DbSet<TipoLog> TipoLog { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

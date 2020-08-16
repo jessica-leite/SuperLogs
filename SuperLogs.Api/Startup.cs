@@ -1,26 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using SuperLogs.Model.Context;
-
-using SuperLogs.Service.Interfaces;
-using SuperLogs.Service;
-using Microsoft.AspNetCore.Identity;
-using AutoMapper;
-using SuperLogs.Transport.Mappings;
 using Microsoft.IdentityModel.Tokens;
+using SuperLogs.Model.Context;
+using SuperLogs.Service;
+using SuperLogs.Service.Interfaces;
+using SuperLogs.Transport.Mappings;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 namespace SuperLogs.Api
