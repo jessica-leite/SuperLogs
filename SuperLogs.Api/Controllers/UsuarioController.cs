@@ -21,7 +21,7 @@ namespace SuperLogs.Api.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
 
-        public UsuarioController(UserManager<IdentityUser> userManager, 
+        public UsuarioController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
@@ -36,11 +36,11 @@ namespace SuperLogs.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult> RegisterUser([FromBody]UsuarioDTO model)
+        public async Task<ActionResult> RegisterUser([FromBody] UsuarioDTO model)
         {
             var user = new IdentityUser
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email,
                 EmailConfirmed = true
             };
@@ -59,11 +59,13 @@ namespace SuperLogs.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UsuarioDTO userInfo)
         {
-            var result = await _signInManager.PasswordSignInAsync(userInfo.Email, userInfo.Password,
+            var user = await _userManager.FindByEmailAsync(userInfo.Email);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, userInfo.Password,
                 isPersistent: false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
+                userInfo.UserName = user.UserName;
                 return Ok(GeraToken(userInfo));
             }
             else
@@ -95,7 +97,8 @@ namespace SuperLogs.Api.Controllers
                 Authenticated = true,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = expiration,
-                Message = "Token JWT"
+                Message = "Token JWT",
+                UserName = userInfo.UserName
             };
         }
 
